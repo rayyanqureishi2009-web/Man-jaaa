@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gift Acceptance Challenge! 😉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #fce4ec; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; position: relative; }
+        h1 { font-family: 'Dancing Script', cursive; color: #d81b60; font-size: 2.5rem; text-align: center; margin-bottom: 30px; }
+        .buttons-container { display: flex; gap: 30px; margin-top: 20px; position: relative; width: 100%; justify-content: center; }
+        .btn { padding: 15px 30px; border: none; border-radius: 30px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        #yesBtn { background-color: #4CAF50; color: white; }
+        #yesBtn:hover { background-color: #45a049; transform: scale(1.05); }
+        #noBtn { background-color: #f44336; color: white; position: absolute; } /* No button ko absolute rakha hai */
+        #noBtn:hover { background-color: #da190b; transform: scale(1.05); }
+
+        #message { margin-top: 40px; font-size: 1.3rem; color: #d81b60; font-weight: 600; text-align: center; min-height: 30px; }
+        #finalMessage {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #d81b60; font-family: 'Dancing Script', cursive;
+            font-size: 3rem; display: none; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 1000;
+            text-align: center; padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Hey Hadia, Kya tum gift accept karogi? 🙃</h1>
+
+    <div class="buttons-container">
+        <button id="yesBtn" class="btn" onclick="acceptGift()">Yes! 😍</button>
+        <button id="noBtn" class="btn" onclick="moveNoButton()">No! 😠</button>
+    </div>
+
+    <div id="message"></div>
+
+    <div id="finalMessage">
+        Thanks Hadia! <br> Mujhe pata tha maan jaogi! ❤️
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const messageDiv = document.getElementById('message');
+        const finalMessageDiv = document.getElementById('finalMessage');
+
+        let attempts = 0;
+        const noMessages = [
+            "Nice try! 😉",
+            "Are you sure? 🤔",
+            "Maan jao naaa Hadia! 🙏",
+            "Ek baar aur soch lo! 😊",
+            "Please, please, please! 🥺",
+            "Yeh sahi nahi hai! 😅",
+            "Zid mat karo! 😋",
+            "Just say YES! 😍",
+            "Aakhri mauqa de rahi hon! 😉",
+            "Mujhe pata hai tum maan jaogi! 🥰"
+        ];
+
+        function moveNoButton() {
+            attempts++;
+            messageDiv.innerText = noMessages[attempts % noMessages.length];
+
+            const maxX = window.innerWidth - noBtn.clientWidth;
+            const maxY = window.innerHeight - noBtn.clientHeight;
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+
+            if (attempts >= noMessages.length * 2) { // After enough attempts, make it easier
+                noBtn.style.transition = 'none'; // Stop transition to make it static
+            } else {
+                noBtn.style.transition = 'all 0.4s ease'; // Keep transition for a bit
+            }
+        }
+
+        function acceptGift() {
+            finalMessageDiv.style.display = 'flex';
+        }
+
+        // To make the No button start from a random position
+        window.onload = () => {
+            const maxX = window.innerWidth - noBtn.clientWidth;
+            const maxY = window.innerHeight - noBtn.clientHeight;
+            noBtn.style.left = (Math.random() * maxX) + 'px';
+            noBtn.style.top = (Math.random() * maxY) + 'px';
+        };
+    </script>
+</body>
+</html>
+
